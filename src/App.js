@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import About from "./components/About";
+import Skills from "./components/Skills";
+import Projects from "./components/Projects";
+import Education from "./components/Education";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import "./App.css";
 
-function App() {
+export default function App() {
+  // Scroll reveal animation
+  useEffect(() => {
+    const reveal = () => {
+      const reveals = document.querySelectorAll(".reveal, .card, .project-card, .about-card");
+      reveals.forEach((el, i) => {
+        const windowHeight = window.innerHeight;
+        const elementTop = el.getBoundingClientRect().top;
+        const visible = 150;
+        if (elementTop < windowHeight - visible) {
+          setTimeout(() => el.classList.add("active", "show"), i * 100);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", reveal);
+    reveal();
+    return () => window.removeEventListener("scroll", reveal);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar />
+      <Home />
+      <About />   {/* Proper Card-styled About Section */}
+      <Skills />
+      <Projects />
+      <Education />
+      <Contact />
+      <Footer />
+    </>
   );
 }
-
-export default App;
